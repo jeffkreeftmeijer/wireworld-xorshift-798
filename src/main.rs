@@ -1,4 +1,5 @@
-use bevy::prelude::*;
+use bevy::{color::palettes::css::*, prelude::*};
+use bevy_life::{MooreCell2d, SimulationBatch, WireWorld2dPlugin, WireWorldCellState};
 use wireworld_xorshift_798::State;
 
 const INITIAL_STATE: &str = include_str!("../xorshift.rle");
@@ -16,7 +17,10 @@ fn main() {
             ..default()
         }))
         .insert_resource(ClearColor(Color::srgb(0., 0., 0.)))
+        .add_plugins(WireWorld2dPlugin::default().with_time_step(1. / 30.))
+        .insert_resource(SimulationBatch)
         .add_systems(Startup, (setup_camera, setup_map))
+        .add_systems(Update, color_sprites)
         .run();
 }
 
@@ -34,25 +38,32 @@ fn setup_map(mut commands: Commands) {
             Visibility::default(),
         ))
         .with_children(|builder| {
-            state.cells.indexed_iter().for_each(
-                |((y, x), state): ((usize, usize), &u8)| match state {
-                    0 => (),
-                    _ => {
-                        builder.spawn((
-                            Sprite {
-                                custom_size: Some(Vec2::splat(SCALE)),
-                                color: [
-                                    Color::srgba(0., 0., 0., 255.),
-                                    Color::srgba(0., 0., 255., 255.),
-                                    Color::srgba(255., 255., 255., 255.),
-                                    Color::srgba(255., 255., 0., 255.),
-                                ][*state as usize],
-                                ..default()
-                            },
-                            Transform::from_xyz(SCALE * x as f32, -SCALE * y as f32, 0.),
-                        ));
-                    }
-                },
-            );
+            for (index, state) in state.cells.into_iter().enumerate() {
+                if let Some(state) = state {
+                    let (x, y) = (index as f32 % WIDTH, index as f32 / WIDTH);
+
+                    builder.spawn((
+                        Sprite {
+                            custom_size: Some(Vec2::splat(SCALE)),
+                            ..default()
+                        },
+                        Transform::from_xyz(SCALE * x as f32, -SCALE * y as f32, 0.),
+                        MooreCell2d::new(IVec2::new(x as i32, y as i32)),
+                        state,
+                    ));
+                }
+            }
+        });
+}
+
+pub fn color_sprites(
+    mut query: Query<(&WireWorldCellState, &mut Sprite), Changed<WireWorldCellState>>,
+) {
+    query
+        .par_iter_mut()
+        .for_each(|(state, mut sprite)| match state {
+            WireWorldCellState::ElectronHead => sprite.color = Color::Srgba(BLUE),
+            WireWorldCellState::ElectronTail => sprite.color = Color::Srgba(WHITE),
+            WireWorldCellState::Conductor => sprite.color = Color::Srgba(ORANGE),
         });
 }

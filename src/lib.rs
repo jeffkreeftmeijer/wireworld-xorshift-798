@@ -1,5 +1,7 @@
+use bevy_life::WireWorldCellState::{Conductor, ElectronHead, ElectronTail};
+
 pub struct State {
-    pub cells: ndarray::Array<u8, ndarray::Ix2>,
+    pub cells: ndarray::Array<Option<bevy_life::WireWorldCellState>, ndarray::Ix2>,
 }
 
 impl<I: ca_formats::Input> From<ca_formats::rle::Rle<I>> for State {
@@ -28,7 +30,7 @@ impl<I: ca_formats::Input> From<ca_formats::rle::Rle<I>> for State {
             data => panic!("Could not read RLE context data: {:?}", data),
         }
 
-        let mut cells = ndarray::Array::zeros((height, width));
+        let mut cells = ndarray::Array::from_elem((height, width), None);
 
         for cell in rle {
             match cell {
@@ -39,7 +41,12 @@ impl<I: ca_formats::Input> From<ca_formats::rle::Rle<I>> for State {
                     let x: usize = (x - x_start).try_into().unwrap();
                     let y: usize = (y - y_start).try_into().unwrap();
 
-                    cells[(y, x)] = state;
+                    cells[(y, x)] = match state {
+                        1 => Some(ElectronHead),
+                        2 => Some(ElectronTail),
+                        3 => Some(Conductor),
+                        _ => None,
+                    }
                 }
                 Err(error) => panic!("{}", error),
             };
@@ -52,6 +59,7 @@ impl<I: ca_formats::Input> From<ca_formats::rle::Rle<I>> for State {
 #[cfg(test)]
 mod tests {
     use crate::State;
+    use bevy_life::WireWorldCellState::{Conductor, ElectronHead, ElectronTail};
 
     #[test]
     fn test_from_rle() {
@@ -62,9 +70,10 @@ mod tests {
 
         assert_eq!(state.cells.shape(), [3, 4]);
 
-        assert_eq!(state.cells[(0, 1)], 2);
-        assert_eq!(state.cells[(0, 2)], 1);
-        assert_eq!(state.cells[(1, 0)], 3);
+        assert_eq!(state.cells[(0, 0)], None);
+        assert_eq!(state.cells[(0, 1)], Some(ElectronTail));
+        assert_eq!(state.cells[(0, 2)], Some(ElectronHead));
+        assert_eq!(state.cells[(1, 0)], Some(Conductor));
     }
 
     #[test]
@@ -78,8 +87,9 @@ mod tests {
 
         assert_eq!(state.cells.shape(), [3, 4]);
 
-        assert_eq!(state.cells[(0, 1)], 2);
-        assert_eq!(state.cells[(0, 2)], 1);
-        assert_eq!(state.cells[(1, 0)], 3);
+        assert_eq!(state.cells[(0, 0)], None);
+        assert_eq!(state.cells[(0, 1)], Some(ElectronTail));
+        assert_eq!(state.cells[(0, 2)], Some(ElectronHead));
+        assert_eq!(state.cells[(1, 0)], Some(Conductor));
     }
 }
