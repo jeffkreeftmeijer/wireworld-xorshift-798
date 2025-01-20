@@ -13,6 +13,7 @@
         devShell = with pkgs; mkShell {
           buildInputs = [
             cargo
+            lld
           ];
           RUST_SRC_PATH = rustPlatform.rustLibSrc;
         };
