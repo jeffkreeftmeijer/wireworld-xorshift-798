@@ -13,19 +13,18 @@ fn setup_camera(mut commands: Commands) {
 }
 
 fn setup_map(mut commands: Commands) {
-    let (width, height) = (200, 100);
     let sprite_size = 2.;
 
-    let mut state = State {
-        cells: ndarray::Array::zeros((width, height))
-    };
-    state.cells[(50, 50)] = 1;
+    let file = std::fs::File::open("./xorshift.rle").unwrap();
+    let rle = ca_formats::rle::Rle::new_from_file(file).unwrap();
+    let state = State::from(rle);
+    let [height, width] = state.cells.shape() else { panic!("Could not determine shape") };
 
     commands
         .spawn((
             Transform::from_xyz(
-                -(width as f32 * sprite_size) / 2.,
-                -(height as f32 * sprite_size) / 2.,
+                -(*width as f32 * sprite_size) / 2.,
+                (*height as f32 * sprite_size) / 2.,
                 0.,
             ),
             Visibility::default(),
@@ -33,17 +32,19 @@ fn setup_map(mut commands: Commands) {
         .with_children(|builder| {
             state.cells
                 .indexed_iter()
-                .for_each(|((x, y), state): ((usize, usize), &u8)| {
+                .for_each(|((y, x), state): ((usize, usize), &u8)| {
                     builder.spawn((
                         Sprite {
                             custom_size: Some(Vec2::splat(sprite_size)),
                             color: [
                                 Color::srgba(0., 0., 0., 255.),
+                                Color::srgba(0., 0., 255., 255.),
                                 Color::srgba(255., 255., 255., 255.),
+                                Color::srgba(255., 255., 0., 255.),
                             ][*state as usize],
                             ..default()
                         },
-                        Transform::from_xyz(sprite_size * x as f32, sprite_size * y as f32, 0.),
+                        Transform::from_xyz(sprite_size * x as f32, -sprite_size * y as f32, 0.),
                     ));
                 });
         });
