@@ -45,9 +45,7 @@ impl<I: ca_formats::Input> From<ca_formats::rle::Rle<I>> for State {
             };
         }
 
-        State {
-            cells: cells,
-        }
+        State { cells: cells }
     }
 }
 
@@ -57,11 +55,12 @@ mod tests {
 
     #[test]
     fn test_from_rle() {
-        let rle = ca_formats::rle::Rle::new("x = 4, y = 3, rule = WireWorld\n.BA$C2.C$.2C!").unwrap();
+        let rle =
+            ca_formats::rle::Rle::new("x = 4, y = 3, rule = WireWorld\n.BA$C2.C$.2C!").unwrap();
 
         let state = State::from(rle);
 
-        assert_eq!(state.cells.shape(), [3,4]);
+        assert_eq!(state.cells.shape(), [3, 4]);
 
         assert_eq!(state.cells[(0, 1)], 2);
         assert_eq!(state.cells[(0, 2)], 1);
@@ -70,11 +69,14 @@ mod tests {
 
     #[test]
     fn test_from_rle_with_negative_indexes() {
-        let rle = ca_formats::rle::Rle::new("#CXRLE Pos=-1,-1\nx = 4, y = 3, rule = WireWorld\n.BA$C2.C$.2C!").unwrap();
+        let rle = ca_formats::rle::Rle::new(
+            "#CXRLE Pos=-1,-1\nx = 4, y = 3, rule = WireWorld\n.BA$C2.C$.2C!",
+        )
+        .unwrap();
 
         let state = State::from(rle);
 
-        assert_eq!(state.cells.shape(), [3,4]);
+        assert_eq!(state.cells.shape(), [3, 4]);
 
         assert_eq!(state.cells[(0, 1)], 2);
         assert_eq!(state.cells[(0, 2)], 1);
