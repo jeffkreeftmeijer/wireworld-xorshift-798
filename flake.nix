@@ -14,6 +14,7 @@
           buildInputs = [
             cargo
             lld
+            wasm-bindgen-cli
           ];
           RUST_SRC_PATH = rustPlatform.rustLibSrc;
         };
