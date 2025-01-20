@@ -1,0 +1,6 @@
+[package]
+name = "wireworld-xorshift-798"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
