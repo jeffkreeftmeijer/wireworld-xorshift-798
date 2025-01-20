@@ -1,4 +1,4 @@
-use bevy::{color::palettes::css::*, prelude::*};
+use bevy::prelude::*;
 use bevy_life::{MooreCell2d, SimulationBatch, WireWorld2dPlugin, WireWorldCellState};
 use wireworld_xorshift_798::State;
 
@@ -62,8 +62,8 @@ pub fn color_sprites(
     query
         .par_iter_mut()
         .for_each(|(state, mut sprite)| match state {
-            WireWorldCellState::ElectronHead => sprite.color = Color::Srgba(BLUE),
-            WireWorldCellState::ElectronTail => sprite.color = Color::Srgba(WHITE),
-            WireWorldCellState::Conductor => sprite.color = Color::Srgba(ORANGE),
+            WireWorldCellState::ElectronHead => sprite.color = Color::srgba(0., 0.5, 1., 1.),
+            WireWorldCellState::ElectronTail => sprite.color = Color::srgba(1., 1., 1., 1.),
+            WireWorldCellState::Conductor => sprite.color = Color::srgba(1., 0.5, 0., 1.),
         });
 }
