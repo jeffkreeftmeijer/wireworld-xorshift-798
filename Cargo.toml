@@ -21,6 +21,6 @@ lto = "thin"
 
 [profile.wasm-release]
 inherits = "release"
-opt-level = "s"
+opt-level = "z"
 strip = "debuginfo"
 
