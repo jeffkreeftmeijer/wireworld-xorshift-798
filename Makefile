@@ -7,5 +7,5 @@ build:
 	cargo build --profile wasm-release --target wasm32-unknown-unknown
 
 optimize:
-	wasm-opt -Os --output dist/xorshift_bg.wasm dist/xorshift_bg.wasm
+	wasm-opt -Oz --output dist/xorshift_bg.wasm dist/xorshift_bg.wasm
 
