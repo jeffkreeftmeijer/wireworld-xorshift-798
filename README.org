@@ -1,0 +1,3 @@
+#+title: wireworld-xorshift-798
+
+The [[https://en.wikipedia.org/wiki/Xorshift][Xorshift]]-798 16-bit random number generator implemented as a [[https://en.wikipedia.org/wiki/Wireworld][WireWorld]] cellular automaton.
