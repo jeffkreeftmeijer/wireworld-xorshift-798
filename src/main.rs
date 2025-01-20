@@ -2,6 +2,8 @@ use bevy::prelude::*;
 use wireworld_xorshift_798::State;
 
 const INITIAL_STATE: &str = include_str!("../xorshift.rle");
+const WIDTH: f32 = 398.;
+const HEIGHT: f32 = 206.;
 
 fn main() {
     App::new()
@@ -19,13 +21,12 @@ fn setup_map(mut commands: Commands) {
 
     let rle = ca_formats::rle::Rle::new(INITIAL_STATE).unwrap();
     let state = State::from(rle);
-    let [height, width] = state.cells.shape() else { panic!("Could not determine shape") };
 
     commands
         .spawn((
             Transform::from_xyz(
-                -(*width as f32 * sprite_size) / 2.,
-                (*height as f32 * sprite_size) / 2.,
+                -WIDTH * sprite_size / 2.,
+                HEIGHT * sprite_size / 2.,
                 0.,
             ),
             Visibility::default(),
