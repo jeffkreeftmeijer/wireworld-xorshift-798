@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 bevy = "0.15.1"
+ca-formats = "0.3.5"
 ndarray = "0.16.1"
 
 [profile.dev]
