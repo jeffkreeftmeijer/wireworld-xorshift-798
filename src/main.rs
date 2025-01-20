@@ -16,7 +16,7 @@ fn main() {
             }),
             ..default()
         }))
-        .insert_resource(ClearColor(Color::srgb(0., 0., 0.)))
+        .insert_resource(ClearColor(Color::Srgba(Srgba::NONE)))
         .add_plugins(WireWorld2dPlugin::default().with_time_step(1. / 30.))
         .insert_resource(SimulationBatch)
         .add_systems(Startup, (setup_camera, setup_map))
