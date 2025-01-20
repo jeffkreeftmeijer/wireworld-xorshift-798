@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 bevy = "0.15.1"
+bevy_life = "0.11.0"
 ca-formats = "0.3.5"
 ndarray = "0.16.1"
 

@@ -749,6 +749,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "bevy_life"
+version = "0.11.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "79015bc9c0ff75f7f1b58291d93f4304d21386c3fffe0837f26b5617e3f37294"
+dependencies = [
+ "bevy",
+ "bevy_reflect",
+]
+
+[[package]]
 name = "bevy_log"
 version = "0.15.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4890,6 +4900,7 @@ name = "wireworld-xorshift-798"
 version = "0.1.0"
 dependencies = [
  "bevy",
+ "bevy_life",
  "ca-formats",
  "ndarray",
 ]
