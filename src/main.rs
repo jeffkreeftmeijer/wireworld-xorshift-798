@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use wireworld_xorshift_798::State;
 
 fn main() {
     App::new()
@@ -15,8 +16,10 @@ fn setup_map(mut commands: Commands) {
     let (width, height) = (200, 100);
     let sprite_size = 2.;
 
-    let mut cells = ndarray::Array::zeros((width, height));
-    cells[(50, 50)] = 1;
+    let mut state = State {
+        cells: ndarray::Array::zeros((width, height))
+    };
+    state.cells[(50, 50)] = 1;
 
     commands
         .spawn((
@@ -28,9 +31,9 @@ fn setup_map(mut commands: Commands) {
             Visibility::default(),
         ))
         .with_children(|builder| {
-            cells
+            state.cells
                 .indexed_iter()
-                .for_each(|((x, y), state): ((usize, usize), &u32)| {
+                .for_each(|((x, y), state): ((usize, usize), &u8)| {
                     builder.spawn((
                         Sprite {
                             custom_size: Some(Vec2::splat(sprite_size)),
