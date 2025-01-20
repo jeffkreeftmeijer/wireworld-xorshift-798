@@ -1,6 +1,8 @@
 use bevy::prelude::*;
 use wireworld_xorshift_798::State;
 
+const INITIAL_STATE: &str = include_str!("../xorshift.rle");
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -15,8 +17,7 @@ fn setup_camera(mut commands: Commands) {
 fn setup_map(mut commands: Commands) {
     let sprite_size = 2.;
 
-    let file = std::fs::File::open("./xorshift.rle").unwrap();
-    let rle = ca_formats::rle::Rle::new_from_file(file).unwrap();
+    let rle = ca_formats::rle::Rle::new(INITIAL_STATE).unwrap();
     let state = State::from(rle);
     let [height, width] = state.cells.shape() else { panic!("Could not determine shape") };
 
