@@ -1,6 +1,6 @@
 #+title: wireworld-xorshift-798
 #+export_file_name: index
-#+options: html-style:nil
+#+options: html-style:nil toc:nil num:nil
 #+html_head: <style>
 #+html_head:   body {
 #+html_head:     font: 18px/1.6 ui-serif, serif;
