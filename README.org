@@ -17,7 +17,7 @@
 #+html_head:   canvas:focus {
 #+html_head:     outline: none;
 #+html_head:   }
-#+html_head:   img {
+#+html_head:   a:first-child {
 #+html_head:     display: none;
 #+html_head:   }
 #+html_head: </style>
@@ -28,7 +28,7 @@
 #+html_head: </script>
 #+html_head: <div><canvas id="xorshift"></canvas></div>
 
-[[./xorshift.png]]
+[[https://jeffkreeftmeijer.github.io/wireworld-xorshift-798/][./xorshift.png]]
 
 The [[https://en.wikipedia.org/wiki/Xorshift][Xorshift]]-798 16-bit random number generator implemented as a [[https://en.wikipedia.org/wiki/Wireworld][WireWorld]] cellular automaton.
 
