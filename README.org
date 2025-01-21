@@ -1,4 +1,5 @@
 #+title: wireworld-xorshift-798
+#+export_file_name: index
 #+html_head: <style>
 #+html_head:   body {
 #+html_head:     background-color: #303030;
