@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-01-21 Tue 09:52 -->
+<!-- 2025-01-21 Tue 09:54 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>wireworld-xorshift-798</title>
@@ -28,6 +28,9 @@ outline: none;
 a:first-child {
 display: none;
 }
+div#content {
+padding: 10px;
+}
 </style>
 <meta name="color-scheme" content="dark">
 <script type="module">
@@ -47,9 +50,9 @@ init()
 The <a href="https://en.wikipedia.org/wiki/Xorshift">Xorshift</a>-798 16-bit random number generator implemented as a <a href="https://en.wikipedia.org/wiki/Wireworld">WireWorld</a> cellular automaton.
 </p>
 
-<div id="outline-container-org2d06f32" class="outline-2">
-<h2 id="org2d06f32">Xorshift-798</h2>
-<div class="outline-text-2" id="text-org2d06f32">
+<div id="outline-container-orgcacc4c6" class="outline-2">
+<h2 id="orgcacc4c6">Xorshift-798</h2>
+<div class="outline-text-2" id="text-orgcacc4c6">
 <p>
 A <a href="https://en.wikipedia.org/wiki/Xorshift">Xorshift</a> random number generator combines a seed with a bit shifted version of itself through exclusive-or.
 A <a href="http://www.retroprogramming.com/2017/07/xorshift-pseudorandom-numbers-in-z80.html">16-bit version of the algorithm</a> uses 7, 9, 8 as the shift triplet, meaning it shifts seven places to the left, nine to the right, and eight to the left again.
@@ -73,7 +76,7 @@ Essentially, this removes the leftmost seven digits and appends seven zeros to t
 Then, the state is copied and shifted right nine times before it&rsquo;s combined with the state again before the final step, in which it&rsquo;s shifted left eight times.
 </p>
 
-<pre class="example" id="org271b07c">
+<pre class="example" id="org92f9c69">
 state               = 1111111111111111
 state &lt;&lt; 7          = 1111111110000000
 state ^= state &lt;&lt; 7 = 0000000001111111
@@ -91,7 +94,7 @@ state ^= state &lt;&lt; 8 = 0111111101111111
 To produce an endless stream of random numbers, the state is then used as the new seed.
 </p>
 
-<pre class="example" id="org0c52990">
+<pre class="example" id="org3dcdb66">
 xorshift16(1111111111111111) = 0111111101111111
 xorshift16(0111111101111111) = 0101111110011111
 xorshift16(0101111110011111) = 1100011101010111
