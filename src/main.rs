@@ -12,6 +12,7 @@ fn main() {
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
                 resolution: (WIDTH * SCALE, HEIGHT * SCALE).into(),
+                canvas: Some("#xorshift".into()),
                 ..default()
             }),
             ..default()
