@@ -20,6 +20,9 @@
 #+html_head:   a:first-child {
 #+html_head:     display: none;
 #+html_head:   }
+#+html_head:   div#content {
+#+html_head:     padding: 10px;
+#+html_head:   }
 #+html_head: </style>
 #+html_head: <meta name="color-scheme" content="dark">
 #+html_head: <script type="module">
