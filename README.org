@@ -1,3 +1,51 @@
 #+title: wireworld-xorshift-798
 
 The [[https://en.wikipedia.org/wiki/Xorshift][Xorshift]]-798 16-bit random number generator implemented as a [[https://en.wikipedia.org/wiki/Wireworld][WireWorld]] cellular automaton.
+
+* Xorshift-798
+
+A [[https://en.wikipedia.org/wiki/Xorshift][Xorshift]] random number generator combines a seed with a bit shifted version of itself through exclusive-or.
+A [[http://www.retroprogramming.com/2017/07/xorshift-pseudorandom-numbers-in-z80.html][16-bit version of the algorithm]] uses 7, 9, 8 as the shift triplet, meaning it shifts seven places to the left, nine to the right, and eight to the left again.
+
+#+begin_src rust
+  fn xorshift16(mut state: u16) -> u16 {
+      state ^= state << 7;
+      state ^= state >> 9;
+      state ^= state << 8;
+      state
+  }
+#+end_src
+
+When a seed ~0b1111111111111111~ is passed to the ~xorshift16~ function, it gets exclusive-ored with a bit shifted copy of itself three times.
+The first time, it's shifted left seven times before being combined with the originial to produce a new state.
+Essentially, this removes the leftmost seven digits and appends seven zeros to the right.
+Then, the state is copied and shifted right nine times before it's combined with the state again before the final step, in which it's shifted left eight times.
+
+#+begin_example
+state               = 1111111111111111
+state << 7          = 1111111110000000
+state ^= state << 7 = 0000000001111111
+
+state               = 0000000001111111
+state >> 9          = 0000000000000000
+state ^= state >> 9 = 0000000001111111
+
+state               = 0000000001111111
+state << 8          = 0111111100000000
+state ^= state << 8 = 0111111101111111
+#+end_example
+
+To produce an endless stream of random numbers, the state is then used as the new seed.
+
+#+begin_example
+xorshift16(1111111111111111) = 0111111101111111
+xorshift16(0111111101111111) = 0101111110011111
+xorshift16(0101111110011111) = 1100011101010111
+xorshift16(1100011101010111) = 1000110111100001
+xorshift16(1000110111100001) = 0010001001011111
+xorshift16(0010001001011111) = 1101010011011001
+xorshift16(1101010011011001) = 1011110100000101
+xorshift16(1011110100000101) = 1010010110011010
+xorshift16(1010010110011010) = 1100011010101110
+xorshift16(1100011010101110) = 0111011111100110
+#+end_example
