@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-01-21 Tue 08:58 -->
+<!-- 2025-01-21 Tue 09:37 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>wireworld-xorshift-798</title>
@@ -11,43 +11,51 @@
 <meta name="generator" content="Org Mode" />
 <style>
 body {
+font: 18px/1.6 ui-serif, serif;
+margin: auto;
+padding: 2em;
+width: 816px;
 background-color: #303030;
 }
 canvas {
 display: block;
-margin: 2em auto 0 auto;
+margin: 1em auto;
+padding: 10px;
 }
 canvas:focus {
 outline: none;
 }
+img {
+display: none;
+}
 </style>
+<meta name="color-scheme" content="dark">
 <script type="module">
 import init from './dist/xorshift.js'
 init()
 </script>
-<canvas id="xorshift"></canvas>
+<div><canvas id="xorshift"></canvas></div>
 </head>
 <body>
 <div id="content" class="content">
 <h1 class="title">wireworld-xorshift-798</h1>
-<div id="table-of-contents" role="doc-toc">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents" role="doc-toc">
-<ul>
-<li><a href="#org97daaed">1. Xorshift-798</a></li>
-</ul>
+
+<div id="orge5fd97d" class="figure">
+<p><img src="./xorshift.png" alt="xorshift.png" />
+</p>
 </div>
-</div>
+
 <p>
 The <a href="https://en.wikipedia.org/wiki/Xorshift">Xorshift</a>-798 16-bit random number generator implemented as a <a href="https://en.wikipedia.org/wiki/Wireworld">WireWorld</a> cellular automaton.
 </p>
 
-<div id="outline-container-org97daaed" class="outline-2">
-<h2 id="org97daaed"><span class="section-number-2">1.</span> Xorshift-798</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-org193dde9" class="outline-2">
+<h2 id="org193dde9">Xorshift-798</h2>
+<div class="outline-text-2" id="text-org193dde9">
 <p>
 A <a href="https://en.wikipedia.org/wiki/Xorshift">Xorshift</a> random number generator combines a seed with a bit shifted version of itself through exclusive-or.
 A <a href="http://www.retroprogramming.com/2017/07/xorshift-pseudorandom-numbers-in-z80.html">16-bit version of the algorithm</a> uses 7, 9, 8 as the shift triplet, meaning it shifts seven places to the left, nine to the right, and eight to the left again.
+An example implementation in Rust might look like this:
 </p>
 
 <div class="org-src-container">
@@ -61,13 +69,13 @@ A <a href="http://www.retroprogramming.com/2017/07/xorshift-pseudorandom-numbers
 </div>
 
 <p>
-When a seed <code>0b1111111111111111</code> is passed to the <code>xorshift16</code> function, it gets exclusive-ored with a bit shifted copy of itself three times.
+When a seed (<code>0b1111111111111111</code>) is passed to the <code>xorshift16</code> function, it gets exclusive-ored with a bit shifted copy of itself three times.
 The first time, it&rsquo;s shifted left seven times before being combined with the originial to produce a new state.
 Essentially, this removes the leftmost seven digits and appends seven zeros to the right.
 Then, the state is copied and shifted right nine times before it&rsquo;s combined with the state again before the final step, in which it&rsquo;s shifted left eight times.
 </p>
 
-<pre class="example" id="org7a893b5">
+<pre class="example" id="orgf642495">
 state               = 1111111111111111
 state &lt;&lt; 7          = 1111111110000000
 state ^= state &lt;&lt; 7 = 0000000001111111
@@ -85,7 +93,7 @@ state ^= state &lt;&lt; 8 = 0111111101111111
 To produce an endless stream of random numbers, the state is then used as the new seed.
 </p>
 
-<pre class="example" id="org7d18020">
+<pre class="example" id="orgc489146">
 xorshift16(1111111111111111) = 0111111101111111
 xorshift16(0111111101111111) = 0101111110011111
 xorshift16(0101111110011111) = 1100011101010111
@@ -99,11 +107,6 @@ xorshift16(1100011010101110) = 0111011111100110
 </pre>
 </div>
 </div>
-</div>
-<div id="postamble" class="status">
-<p class="author">Author: Jeff Kreeftmeijer</p>
-<p class="date">Created: 2025-01-21 Tue 08:58</p>
-<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>
