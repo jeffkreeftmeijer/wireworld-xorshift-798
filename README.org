@@ -1,4 +1,21 @@
 #+title: wireworld-xorshift-798
+#+html_head: <style>
+#+html_head:   body {
+#+html_head:     background-color: #303030;
+#+html_head:   }
+#+html_head:   canvas {
+#+html_head:     display: block;
+#+html_head:     margin: 2em auto 0 auto;
+#+html_head:   }
+#+html_head:   canvas:focus {
+#+html_head:     outline: none;
+#+html_head:   }
+#+html_head: </style>
+#+html_head: <script type="module">
+#+html_head:   import init from './dist/xorshift.js'
+#+html_head:   init()
+#+html_head: </script>
+#+html_head: <canvas id="xorshift"></canvas>
 
 The [[https://en.wikipedia.org/wiki/Xorshift][Xorshift]]-798 16-bit random number generator implemented as a [[https://en.wikipedia.org/wiki/Wireworld][WireWorld]] cellular automaton.
 
