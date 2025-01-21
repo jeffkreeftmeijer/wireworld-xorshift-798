@@ -6,15 +6,19 @@
 #+html_head:     font: 18px/1.6 ui-serif, serif;
 #+html_head:     margin: auto;
 #+html_head:     padding: 2em;
-#+html_head:     width: 796px;
+#+html_head:     width: 816px;
 #+html_head:     background-color: #303030;
 #+html_head:   }
 #+html_head:   canvas {
 #+html_head:     display: block;
 #+html_head:     margin: 1em auto;
+#+html_head:     padding: 10px;
 #+html_head:   }
 #+html_head:   canvas:focus {
 #+html_head:     outline: none;
+#+html_head:   }
+#+html_head:   img {
+#+html_head:     display: none;
 #+html_head:   }
 #+html_head: </style>
 #+html_head: <meta name="color-scheme" content="dark">
@@ -22,7 +26,9 @@
 #+html_head:   import init from './dist/xorshift.js'
 #+html_head:   init()
 #+html_head: </script>
-#+html_head: <canvas id="xorshift"></canvas>
+#+html_head: <div><canvas id="xorshift"></canvas></div>
+
+[[./xorshift.png]]
 
 The [[https://en.wikipedia.org/wiki/Xorshift][Xorshift]]-798 16-bit random number generator implemented as a [[https://en.wikipedia.org/wiki/Wireworld][WireWorld]] cellular automaton.
 
